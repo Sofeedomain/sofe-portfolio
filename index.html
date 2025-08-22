@@ -956,6 +956,100 @@
             }
         }
         
+        /* Visitor Counter Styles */
+        .visitor-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .visitor-counter:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 40px rgba(168, 85, 247, 0.3),
+                var(--neon-glow);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+        
+        .visitor-counter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.15), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .visitor-counter:hover::before {
+            left: 100%;
+        }
+        
+        .counter-icon {
+            font-size: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: eyeBlink 3s ease-in-out infinite;
+        }
+        
+        @keyframes eyeBlink {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0.3; }
+        }
+        
+        .counter-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        
+        .counter-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        
+        .counter-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: numberPulse 2s ease-in-out infinite;
+            min-width: 3ch;
+            text-align: center;
+        }
+        
+        @keyframes numberPulse {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.05); 
+                filter: brightness(1.2);
+            }
+        }
+        
         /* Scroll effects */
         .parallax-element {
             transition: transform 0.1s ease-out;
@@ -982,6 +1076,13 @@
 <h1 class="name">Sofe</h1>
 <p class="title">Digital Creator &amp; Storyteller</p>
 <p class="bio">Crafting visual stories that resonate across digital realms. Join me on this creative odyssey as I explore the intersection of art, life, and human connection through the lens of social media and beyond.</p>
+<div class="visitor-counter">
+<div class="counter-icon">👁️</div>
+<div class="counter-text">
+<span class="counter-label">Visitors</span>
+<span class="counter-number" id="visitorCount">0</span>
+</div>
+</div>
 </div>
 <div class="music-section parallax-element">
 <div class="music-card">
@@ -1374,10 +1475,90 @@
             }
         }
         
+        // Visitor Counter Functionality
+        class VisitorCounter {
+            constructor() {
+                this.storageKey = 'websiteVisitorCount';
+                this.sessionKey = 'currentVisitSession';
+                this.init();
+            }
+            
+            init() {
+                this.updateVisitorCount();
+                this.animateCounter();
+            }
+            
+            updateVisitorCount() {
+                // Check if this is a new session
+                const hasVisitedThisSession = sessionStorage.getItem(this.sessionKey);
+                
+                if (!hasVisitedThisSession) {
+                    // New session - increment counter
+                    let currentCount = parseInt(localStorage.getItem(this.storageKey) || '0');
+                    currentCount++;
+                    localStorage.setItem(this.storageKey, currentCount.toString());
+                    sessionStorage.setItem(this.sessionKey, 'visited');
+                }
+                
+                // Display current count
+                const visitorCount = parseInt(localStorage.getItem(this.storageKey) || '0');
+                this.displayCount(visitorCount);
+            }
+            
+            displayCount(count) {
+                const counterElement = document.getElementById('visitorCount');
+                if (counterElement) {
+                    // Format number with commas for better readability
+                    const formattedCount = count.toLocaleString();
+                    counterElement.textContent = formattedCount;
+                }
+            }
+            
+            animateCounter() {
+                const counterElement = document.getElementById('visitorCount');
+                const targetCount = parseInt(localStorage.getItem(this.storageKey) || '0');
+                
+                if (counterElement && targetCount > 0) {
+                    let currentCount = 0;
+                    const increment = Math.max(1, Math.floor(targetCount / 50));
+                    const duration = 2000; // 2 seconds
+                    const stepTime = duration / (targetCount / increment);
+                    
+                    const animate = () => {
+                        currentCount += increment;
+                        if (currentCount >= targetCount) {
+                            currentCount = targetCount;
+                            counterElement.textContent = currentCount.toLocaleString();
+                            return;
+                        }
+                        
+                        counterElement.textContent = currentCount.toLocaleString();
+                        setTimeout(animate, stepTime);
+                    };
+                    
+                    // Start animation after a short delay
+                    setTimeout(animate, 500);
+                }
+            }
+            
+            // Method to get current count (useful for debugging)
+            getCurrentCount() {
+                return parseInt(localStorage.getItem(this.storageKey) || '0');
+            }
+            
+            // Method to reset counter (useful for testing)
+            resetCounter() {
+                localStorage.removeItem(this.storageKey);
+                sessionStorage.removeItem(this.sessionKey);
+                this.displayCount(0);
+            }
+        }
+        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new ProfileEnhancer();
             setupMusicPlayers();
+            new VisitorCounter();
         });
         
         // Music Players Setup
