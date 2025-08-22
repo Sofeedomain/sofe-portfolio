@@ -960,6 +960,62 @@
         .parallax-element {
             transition: transform 0.1s ease-out;
         }
+        
+        /* Floating lyrics background */
+        .floating-lyrics {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .lyric-line {
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.03);
+            font-size: 2rem;
+            white-space: nowrap;
+            animation: floatText 25s linear infinite;
+            transform-origin: center;
+        }
+        
+        .lyric-line:nth-child(odd) {
+            animation-direction: reverse;
+            color: rgba(168, 85, 247, 0.04);
+        }
+        
+        .lyric-line:nth-child(3n) {
+            font-size: 1.5rem;
+            color: rgba(236, 72, 153, 0.03);
+        }
+        
+        .lyric-line:nth-child(4n) {
+            font-size: 2.5rem;
+            color: rgba(79, 172, 254, 0.04);
+        }
+        
+        @keyframes floatText {
+            0% {
+                transform: translateX(-100vw) rotate(-5deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(100vw) rotate(5deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -970,6 +1026,7 @@
 <div class="stars" id="stars"></div>
 <div class="floating-shapes" id="shapes"></div>
 </div>
+<div class="floating-lyrics" id="floatingLyrics"></div>
 <div class="container">
 <div class="profile-section parallax-element">
 <div class="avatar-container">
@@ -1078,6 +1135,7 @@
                 this.createStars();
                 this.createShootingStars();
                 this.createFloatingShapes();
+                this.createFloatingLyrics();
                 this.setupCursor();
                 this.setupInteractivity();
                 this.setupScrollEffects();
@@ -1356,6 +1414,58 @@
                         ticking = true;
                     }
                 });
+            }
+            
+            createFloatingLyrics() {
+                const lyricsContainer = document.getElementById('floatingLyrics');
+                
+                // Poetic phrases inspired by the ethereal mood (avoiding copyrighted lyrics)
+                const poeticLines = [
+                    'ethereal whispers drift through time',
+                    'dreams cascade like stardust',
+                    'infinite moments suspended',
+                    'melodies weave through silence',
+                    'cosmic reveries unfold',
+                    'whispered secrets of the night',
+                    'floating through celestial space',
+                    'echoes of distant memories',
+                    'gentle waves of consciousness',
+                    'luminous thoughts ascending',
+                    'soft murmurs of the universe',
+                    'wandering through dreamscapes',
+                    'delicate fragments of eternity',
+                    'drifting on invisible currents',
+                    'shimmer of forgotten words'
+                ];
+                
+                // Create floating text elements
+                const createLyricLine = (text, delay) => {
+                    const line = document.createElement('div');
+                    line.className = 'lyric-line';
+                    line.textContent = text;
+                    line.style.top = Math.random() * 100 + '%';
+                    line.style.animationDelay = delay + 's';
+                    line.style.animationDuration = (Math.random() * 10 + 20) + 's';
+                    lyricsContainer.appendChild(line);
+                    
+                    // Remove element after animation completes
+                    setTimeout(() => {
+                        if (line.parentNode) {
+                            line.remove();
+                        }
+                    }, (parseFloat(line.style.animationDuration) + parseFloat(line.style.animationDelay)) * 1000);
+                };
+                
+                // Initial batch of lyrics
+                poeticLines.forEach((line, index) => {
+                    createLyricLine(line, Math.random() * 15);
+                });
+                
+                // Continuously add new floating lyrics
+                setInterval(() => {
+                    const randomLine = poeticLines[Math.floor(Math.random() * poeticLines.length)];
+                    createLyricLine(randomLine, 0);
+                }, 4000); // New line every 4 seconds
             }
             
             setupIntersectionObserver() {
