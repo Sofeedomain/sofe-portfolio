@@ -504,6 +504,96 @@
             font-style: italic;
             opacity: 0.9;
             line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        /* Audio Player Styles */
+        .audio-player {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .audio-toggle {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
+        }
+        
+        .audio-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+        }
+        
+        .audio-toggle.playing {
+            background: var(--secondary-gradient);
+        }
+        
+        .play-icon {
+            font-size: 1.2rem;
+            animation: audioIcon 2s ease-in-out infinite;
+        }
+        
+        @keyframes audioIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .volume-slider {
+            width: 100px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+        
+        .volume-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+        
+        .volume-label {
+            font-size: 1.2rem;
+            opacity: 0.7;
         }
         
         /* Revolutionary social cards */
@@ -828,6 +918,16 @@
 <div class="song-artist">Cigarettes After Sex</div>
 </div>
 <div class="music-note">This ethereal masterpiece fuels my creative flow and sets the perfect ambient backdrop for late-night editing sessions ✨</div>
+<div class="audio-player">
+<button class="audio-toggle" id="audioToggle">
+<span class="play-icon">🎵</span>
+<span class="audio-text">Play Ambient</span>
+</button>
+<div class="volume-control">
+<input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+<span class="volume-label">🔊</span>
+</div>
+</div>
 </div>
 </div>
 <div class="social-links">
@@ -1188,7 +1288,175 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new ProfileEnhancer();
+            setupAudioPlayer();
         });
+        
+        // Audio Player Setup
+        function setupAudioPlayer() {
+            // Create multiple audio contexts for layered ambient sound
+            const audioContexts = [];
+            const audioSources = [
+                // Cosmic ambient soundscape (generated tones)
+                { freq: 40, gain: 0.1, type: 'sine' },    // Deep space drone
+                { freq: 80, gain: 0.08, type: 'triangle' }, // Harmonic layer
+                { freq: 160, gain: 0.06, type: 'sine' },   // Mid frequency hum
+                { freq: 200, gain: 0.04, type: 'sawtooth' }, // Texture layer
+            ];
+            
+            let isPlaying = false;
+            const audioToggle = document.getElementById('audioToggle');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const audioText = audioToggle.querySelector('.audio-text');
+            const playIcon = audioToggle.querySelector('.play-icon');
+            
+            // Initialize audio contexts
+            function initAudio() {
+                try {
+                    audioSources.forEach((source, index) => {
+                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        const oscillator = ctx.createOscillator();
+                        const gainNode = ctx.createGain();
+                        const filter = ctx.createBiquadFilter();
+                        
+                        // Configure oscillator
+                        oscillator.frequency.setValueAtTime(source.freq, ctx.currentTime);
+                        oscillator.type = source.type;
+                        
+                        // Configure filter for smoother sound
+                        filter.type = 'lowpass';
+                        filter.frequency.setValueAtTime(1000, ctx.currentTime);
+                        
+                        // Configure gain
+                        gainNode.gain.setValueAtTime(0, ctx.currentTime);
+                        
+                        // Connect audio nodes
+                        oscillator.connect(filter);
+                        filter.connect(gainNode);
+                        gainNode.connect(ctx.destination);
+                        
+                        // Add subtle frequency modulation for organic feel
+                        const lfo = ctx.createOscillator();
+                        const lfoGain = ctx.createGain();
+                        lfo.frequency.setValueAtTime(0.1 + Math.random() * 0.2, ctx.currentTime);
+                        lfo.type = 'sine';
+                        lfoGain.gain.setValueAtTime(source.freq * 0.01, ctx.currentTime);
+                        
+                        lfo.connect(lfoGain);
+                        lfoGain.connect(oscillator.frequency);
+                        
+                        oscillator.start();
+                        lfo.start();
+                        
+                        audioContexts.push({
+                            ctx,
+                            oscillator,
+                            gainNode,
+                            filter,
+                            lfo,
+                            baseGain: source.gain
+                        });
+                    });
+                    
+                } catch (error) {
+                    console.log('Web Audio API not supported');
+                }
+            }
+            
+            // Play ambient sound
+            function playAmbient() {
+                if (audioContexts.length === 0) {
+                    initAudio();
+                }
+                
+                const volume = volumeSlider.value / 100;
+                
+                audioContexts.forEach((audio, index) => {
+                    const fadeInDuration = 2 + index * 0.5;
+                    audio.gainNode.gain.setTargetAtTime(
+                        audio.baseGain * volume,
+                        audio.ctx.currentTime,
+                        fadeInDuration
+                    );
+                    
+                    // Resume context if suspended
+                    if (audio.ctx.state === 'suspended') {
+                        audio.ctx.resume();
+                    }
+                });
+                
+                isPlaying = true;
+                audioToggle.classList.add('playing');
+                audioText.textContent = 'Stop Ambient';
+                playIcon.textContent = '🔮';
+                
+                // Add pulsing effect to visualizer bars when playing
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach(bar => {
+                    bar.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+                });
+            }
+            
+            // Stop ambient sound
+            function stopAmbient() {
+                audioContexts.forEach((audio, index) => {
+                    const fadeOutDuration = 1 + index * 0.2;
+                    audio.gainNode.gain.setTargetAtTime(
+                        0,
+                        audio.ctx.currentTime,
+                        fadeOutDuration
+                    );
+                });
+                
+                isPlaying = false;
+                audioToggle.classList.remove('playing');
+                audioText.textContent = 'Play Ambient';
+                playIcon.textContent = '🎵';
+                
+                // Reset visualizer bars
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach(bar => {
+                    bar.style.animationDuration = '1.5s';
+                });
+            }
+            
+            // Update volume
+            function updateVolume() {
+                if (isPlaying) {
+                    const volume = volumeSlider.value / 100;
+                    audioContexts.forEach(audio => {
+                        audio.gainNode.gain.setTargetAtTime(
+                            audio.baseGain * volume,
+                            audio.ctx.currentTime,
+                            0.1
+                        );
+                    });
+                }
+            }
+            
+            // Event listeners
+            audioToggle.addEventListener('click', () => {
+                if (isPlaying) {
+                    stopAmbient();
+                } else {
+                    playAmbient();
+                }
+            });
+            
+            volumeSlider.addEventListener('input', updateVolume);
+            
+            // Add to cursor hover elements
+            const hoverElements = document.querySelectorAll('a, .social-card, .music-card, .avatar, .audio-toggle');
+            const cursor = document.querySelector('.cursor');
+            
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover');
+                });
+            });
+        }
         
         // Performance optimization
         document.addEventListener('visibilitychange', () => {
