@@ -30,12 +30,12 @@
         body {
             font-family: 'Inter', sans-serif;
             background: 
-                linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%),
-                radial-gradient(ellipse at 50% 0%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 0% 100%, rgba(30, 144, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 100% 100%, rgba(255, 20, 147, 0.06) 0%, transparent 50%);
+                linear-gradient(135deg, rgba(15, 15, 35, 0.8) 0%, rgba(26, 26, 46, 0.8) 25%, rgba(22, 33, 62, 0.8) 50%, rgba(15, 52, 96, 0.8) 75%, rgba(83, 52, 131, 0.8) 100%),
+                url('background.jpg');
             background-attachment: fixed;
-            background-size: 100% 100%, 150% 150%, 120% 120%, 130% 130%;
+            background-size: cover, cover;
+            background-position: center, center;
+            background-repeat: no-repeat, no-repeat;
             color: var(--text-primary);
             overflow-x: hidden;
             min-height: 100vh;
