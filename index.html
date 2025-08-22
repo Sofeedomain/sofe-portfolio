@@ -9,16 +9,16 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
         
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8e44ad 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
-            --dark-gradient: radial-gradient(ellipse at center, #1a0c33 0%, #0c0c1e 40%, #000 100%);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: #b8b8b8;
-            --text-accent: #a855f7;
-            --neon-glow: 0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(168, 85, 247, 0.4), 0 0 80px rgba(168, 85, 247, 0.2);
+            --primary-gradient: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            --secondary-gradient: linear-gradient(135deg, #404040 0%, #303030 50%, #202020 100%);
+            --accent-gradient: linear-gradient(135deg, #666666 0%, #555555 50%, #444444 100%);
+            --dark-gradient: radial-gradient(ellipse at center, #0a0a0a 0%, #050505 40%, #000000 100%);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --text-primary: #e0e0e0;
+            --text-secondary: #888888;
+            --text-accent: #666666;
+            --neon-glow: 0 0 20px rgba(100, 100, 100, 0.3), 0 0 40px rgba(80, 80, 80, 0.2), 0 0 80px rgba(60, 60, 60, 0.1);
         }
         
         * {
@@ -30,14 +30,14 @@
         body {
             font-family: 'Inter', sans-serif;
             background: 
-                radial-gradient(ellipse at top left, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at top right, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(196, 181, 253, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 20%, rgba(221, 214, 254, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 40% 40%, rgba(167, 139, 250, 0.1) 0%, transparent 40%),
-                linear-gradient(135deg, #0F0C1D 0%, #1A0B2E 15%, #2D1B4E 30%, #3C1A5B 45%, #4C1B63 60%, #5B2C87 75%, #6A3D9A 90%, #8B5CF6 100%);
+                radial-gradient(ellipse at top left, rgba(20, 20, 20, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at top right, rgba(15, 15, 15, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(25, 25, 25, 0.7) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(10, 10, 10, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(40, 40, 40, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(35, 35, 35, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 40% 40%, rgba(30, 30, 30, 0.25) 0%, transparent 40%),
+                linear-gradient(135deg, #000000 0%, #0a0a0a 10%, #121212 20%, #1a1a1a 30%, #222222 40%, #2a2a2a 50%, #323232 60%, #3a3a3a 70%, #424242 80%, #4a4a4a 90%, #525252 100%);
             background-attachment: fixed;
             background-size: 
                 120% 120%, 120% 120%, 120% 120%, 120% 120%,
@@ -67,9 +67,9 @@
             left: 50%;
             width: 16px;
             height: 1px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(200, 200, 200, 0.6);
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(150, 150, 150, 0.2);
         }
         
         .cursor::after {
@@ -79,9 +79,9 @@
             left: 50%;
             width: 1px;
             height: 16px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(200, 200, 200, 0.6);
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(150, 150, 150, 0.2);
         }
         
         .cursor-dot {
@@ -90,10 +90,10 @@
             left: 50%;
             width: 3px;
             height: 3px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(180, 180, 180, 0.8);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 8px rgba(120, 120, 120, 0.3);
         }
         
         .cursor.hover {
@@ -102,13 +102,13 @@
         
         .cursor.hover::before,
         .cursor.hover::after {
-            background: rgba(168, 85, 247, 0.9);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+            background: rgba(120, 120, 120, 0.8);
+            box-shadow: 0 0 15px rgba(100, 100, 100, 0.4);
         }
         
         .cursor.hover .cursor-dot {
-            background: rgba(168, 85, 247, 1);
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.8);
+            background: rgba(100, 100, 100, 1);
+            box-shadow: 0 0 12px rgba(80, 80, 80, 0.6);
         }
         
         /* Modern Animated Background */
@@ -122,20 +122,20 @@
             overflow: hidden;
         }
         
-        /* Enhanced Purple Pattern Background */
+        /* Dark Geometric Pattern Background */
         .geometric-pattern {
             position: absolute;
             width: 100%;
             height: 100%;
-            opacity: 0.08;
+            opacity: 0.04;
             background-image: 
-                linear-gradient(30deg, rgba(147, 51, 234, 0.4) 12%, transparent 12.5%, transparent 87%, rgba(147, 51, 234, 0.4) 87.5%, rgba(147, 51, 234, 0.4)),
-                linear-gradient(150deg, rgba(147, 51, 234, 0.4) 12%, transparent 12.5%, transparent 87%, rgba(147, 51, 234, 0.4) 87.5%, rgba(147, 51, 234, 0.4)),
-                linear-gradient(30deg, rgba(168, 85, 247, 0.3) 12%, transparent 12.5%, transparent 87%, rgba(168, 85, 247, 0.3) 87.5%, rgba(168, 85, 247, 0.3)),
-                linear-gradient(150deg, rgba(168, 85, 247, 0.3) 12%, transparent 12.5%, transparent 87%, rgba(168, 85, 247, 0.3) 87.5%, rgba(168, 85, 247, 0.3)),
-                radial-gradient(circle, rgba(196, 181, 253, 0.1) 25%, transparent 26%),
-                linear-gradient(45deg, rgba(139, 92, 246, 0.2) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(124, 58, 237, 0.2) 25%, transparent 25%);
+                linear-gradient(30deg, rgba(40, 40, 40, 0.6) 12%, transparent 12.5%, transparent 87%, rgba(40, 40, 40, 0.6) 87.5%, rgba(40, 40, 40, 0.6)),
+                linear-gradient(150deg, rgba(35, 35, 35, 0.5) 12%, transparent 12.5%, transparent 87%, rgba(35, 35, 35, 0.5) 87.5%, rgba(35, 35, 35, 0.5)),
+                linear-gradient(30deg, rgba(30, 30, 30, 0.4) 12%, transparent 12.5%, transparent 87%, rgba(30, 30, 30, 0.4) 87.5%, rgba(30, 30, 30, 0.4)),
+                linear-gradient(150deg, rgba(25, 25, 25, 0.3) 12%, transparent 12.5%, transparent 87%, rgba(25, 25, 25, 0.3) 87.5%, rgba(25, 25, 25, 0.3)),
+                radial-gradient(circle, rgba(50, 50, 50, 0.2) 25%, transparent 26%),
+                linear-gradient(45deg, rgba(45, 45, 45, 0.3) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(35, 35, 35, 0.25) 25%, transparent 25%);
             background-size: 
                 80px 140px, 80px 140px, 80px 140px, 80px 140px,
                 40px 40px, 60px 60px, 60px 60px;
@@ -167,7 +167,7 @@
         .orb:nth-child(1) {
             width: 350px;
             height: 350px;
-            background: radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, rgba(147, 51, 234, 0.3) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(60, 60, 60, 0.4) 0%, rgba(40, 40, 40, 0.2) 40%, transparent 70%);
             top: 15%;
             right: 25%;
             animation-delay: 0s;
@@ -177,7 +177,7 @@
         .orb:nth-child(2) {
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.5) 0%, rgba(168, 85, 247, 0.2) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(50, 50, 50, 0.3) 0%, rgba(35, 35, 35, 0.15) 45%, transparent 70%);
             top: 60%;
             left: 20%;
             animation-delay: -5s;
@@ -187,7 +187,7 @@
         .orb:nth-child(3) {
             width: 320px;
             height: 320px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0.2) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(45, 45, 45, 0.25) 0%, rgba(30, 30, 30, 0.12) 50%, transparent 70%);
             bottom: 10%;
             right: 20%;
             animation-delay: -10s;
@@ -217,7 +217,7 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(120, 120, 120, 0.3);
             border-radius: 50%;
             animation: particleFloat 12s linear infinite;
         }
@@ -241,18 +241,18 @@
             }
         }
         
-        /* Enhanced Purple Mesh Gradient */
+        /* Dark Mesh Gradient */
         .mesh-gradient {
             position: absolute;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(147, 51, 234, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.18) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.17) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, rgba(196, 181, 253, 0.1) 0%, transparent 50%),
-                conic-gradient(from 180deg at 50% 50%, rgba(167, 139, 250, 0.1) 0deg, transparent 60deg, rgba(147, 51, 234, 0.08) 120deg, transparent 180deg, rgba(168, 85, 247, 0.06) 240deg, transparent 300deg, rgba(167, 139, 250, 0.1) 360deg);
+                radial-gradient(ellipse at 20% 20%, rgba(40, 40, 40, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(35, 35, 35, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(30, 30, 30, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(25, 25, 25, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(50, 50, 50, 0.06) 0%, transparent 50%),
+                conic-gradient(from 180deg at 50% 50%, rgba(45, 45, 45, 0.05) 0deg, transparent 60deg, rgba(40, 40, 40, 0.04) 120deg, transparent 180deg, rgba(35, 35, 35, 0.03) 240deg, transparent 300deg, rgba(45, 45, 45, 0.05) 360deg);
             animation: meshShift 30s ease-in-out infinite alternate;
         }
         
@@ -398,11 +398,11 @@
             font-size: 4rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff 0%, #e2e8f0 30%, #cbd5e1 60%, #94a3b8 100%);
+            background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 30%, #a0a0a0 60%, #808080 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 30px rgba(150, 150, 150, 0.1);
             animation: textShimmer 3s ease-in-out infinite alternate;
         }
         
