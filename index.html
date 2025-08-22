@@ -596,6 +596,89 @@
             opacity: 0.7;
         }
         
+        /* Music Players Styles */
+        .music-players {
+            margin-top: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .player-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+        
+        .player-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .player-tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+        
+        .player-tab.active {
+            background: var(--primary-gradient);
+            border-color: rgba(168, 85, 247, 0.6);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4);
+        }
+        
+        .player-container {
+            position: relative;
+            min-height: 152px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .player-embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .player-embed.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .player-embed iframe {
+            border-radius: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .player-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .music-players {
+                padding: 1.5rem;
+            }
+        }
+        
         /* Revolutionary social cards */
         .social-links {
             display: grid;
@@ -918,14 +1001,18 @@
 <div class="song-artist">Cigarettes After Sex</div>
 </div>
 <div class="music-note">This ethereal masterpiece fuels my creative flow and sets the perfect ambient backdrop for late-night editing sessions ✨</div>
-<div class="audio-player">
-<button class="audio-toggle" id="audioToggle">
-<span class="play-icon">🎵</span>
-<span class="audio-text">Play Ambient</span>
-</button>
-<div class="volume-control">
-<input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
-<span class="volume-label">🔊</span>
+<div class="music-players">
+<div class="player-tabs">
+<button class="player-tab active" data-player="spotify">🎵 Spotify</button>
+<button class="player-tab" data-player="youtube">📺 YouTube</button>
+</div>
+<div class="player-container">
+<div class="player-embed spotify-player active" id="spotifyPlayer">
+<iframe src="https://open.spotify.com/embed/track/0uLFX9Cy9GJYcv0LsRO0Nl?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+<div class="player-embed youtube-player" id="youtubePlayer">
+<iframe width="100%" height="152" src="https://www.youtube.com/embed/sElE_BfQ67s?si=dQw4w9WgXcQ" title="Cigarettes After Sex - Apocalypse (Official Video)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 </div>
 </div>
 </div>
@@ -1288,174 +1375,47 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new ProfileEnhancer();
-            setupAudioPlayer();
+            setupMusicPlayers();
         });
         
-        // Audio Player Setup
-        function setupAudioPlayer() {
-            // Create multiple audio contexts for layered ambient sound
-            const audioContexts = [];
-            const audioSources = [
-                // Cosmic ambient soundscape (generated tones)
-                { freq: 40, gain: 0.1, type: 'sine' },    // Deep space drone
-                { freq: 80, gain: 0.08, type: 'triangle' }, // Harmonic layer
-                { freq: 160, gain: 0.06, type: 'sine' },   // Mid frequency hum
-                { freq: 200, gain: 0.04, type: 'sawtooth' }, // Texture layer
-            ];
+        // Music Players Setup
+        function setupMusicPlayers() {
+            const playerTabs = document.querySelectorAll('.player-tab');
+            const playerEmbeds = document.querySelectorAll('.player-embed');
             
-            let isPlaying = false;
-            const audioToggle = document.getElementById('audioToggle');
-            const volumeSlider = document.getElementById('volumeSlider');
-            const audioText = audioToggle.querySelector('.audio-text');
-            const playIcon = audioToggle.querySelector('.play-icon');
-            
-            // Initialize audio contexts
-            function initAudio() {
-                try {
-                    audioSources.forEach((source, index) => {
-                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                        const oscillator = ctx.createOscillator();
-                        const gainNode = ctx.createGain();
-                        const filter = ctx.createBiquadFilter();
-                        
-                        // Configure oscillator
-                        oscillator.frequency.setValueAtTime(source.freq, ctx.currentTime);
-                        oscillator.type = source.type;
-                        
-                        // Configure filter for smoother sound
-                        filter.type = 'lowpass';
-                        filter.frequency.setValueAtTime(1000, ctx.currentTime);
-                        
-                        // Configure gain
-                        gainNode.gain.setValueAtTime(0, ctx.currentTime);
-                        
-                        // Connect audio nodes
-                        oscillator.connect(filter);
-                        filter.connect(gainNode);
-                        gainNode.connect(ctx.destination);
-                        
-                        // Add subtle frequency modulation for organic feel
-                        const lfo = ctx.createOscillator();
-                        const lfoGain = ctx.createGain();
-                        lfo.frequency.setValueAtTime(0.1 + Math.random() * 0.2, ctx.currentTime);
-                        lfo.type = 'sine';
-                        lfoGain.gain.setValueAtTime(source.freq * 0.01, ctx.currentTime);
-                        
-                        lfo.connect(lfoGain);
-                        lfoGain.connect(oscillator.frequency);
-                        
-                        oscillator.start();
-                        lfo.start();
-                        
-                        audioContexts.push({
-                            ctx,
-                            oscillator,
-                            gainNode,
-                            filter,
-                            lfo,
-                            baseGain: source.gain
-                        });
-                    });
+            // Tab switching functionality
+            playerTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and players
+                    playerTabs.forEach(t => t.classList.remove('active'));
+                    playerEmbeds.forEach(p => p.classList.remove('active'));
                     
-                } catch (error) {
-                    console.log('Web Audio API not supported');
-                }
-            }
-            
-            // Play ambient sound
-            function playAmbient() {
-                if (audioContexts.length === 0) {
-                    initAudio();
-                }
-                
-                const volume = volumeSlider.value / 100;
-                
-                audioContexts.forEach((audio, index) => {
-                    const fadeInDuration = 2 + index * 0.5;
-                    audio.gainNode.gain.setTargetAtTime(
-                        audio.baseGain * volume,
-                        audio.ctx.currentTime,
-                        fadeInDuration
-                    );
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
                     
-                    // Resume context if suspended
-                    if (audio.ctx.state === 'suspended') {
-                        audio.ctx.resume();
+                    // Show corresponding player
+                    const playerType = tab.dataset.player;
+                    const targetPlayer = document.getElementById(playerType + 'Player');
+                    if (targetPlayer) {
+                        targetPlayer.classList.add('active');
                     }
                 });
-                
-                isPlaying = true;
-                audioToggle.classList.add('playing');
-                audioText.textContent = 'Stop Ambient';
-                playIcon.textContent = '🔮';
-                
-                // Add pulsing effect to visualizer bars when playing
-                const bars = document.querySelectorAll('.bar');
-                bars.forEach(bar => {
-                    bar.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
-                });
-            }
-            
-            // Stop ambient sound
-            function stopAmbient() {
-                audioContexts.forEach((audio, index) => {
-                    const fadeOutDuration = 1 + index * 0.2;
-                    audio.gainNode.gain.setTargetAtTime(
-                        0,
-                        audio.ctx.currentTime,
-                        fadeOutDuration
-                    );
-                });
-                
-                isPlaying = false;
-                audioToggle.classList.remove('playing');
-                audioText.textContent = 'Play Ambient';
-                playIcon.textContent = '🎵';
-                
-                // Reset visualizer bars
-                const bars = document.querySelectorAll('.bar');
-                bars.forEach(bar => {
-                    bar.style.animationDuration = '1.5s';
-                });
-            }
-            
-            // Update volume
-            function updateVolume() {
-                if (isPlaying) {
-                    const volume = volumeSlider.value / 100;
-                    audioContexts.forEach(audio => {
-                        audio.gainNode.gain.setTargetAtTime(
-                            audio.baseGain * volume,
-                            audio.ctx.currentTime,
-                            0.1
-                        );
-                    });
-                }
-            }
-            
-            // Event listeners
-            audioToggle.addEventListener('click', () => {
-                if (isPlaying) {
-                    stopAmbient();
-                } else {
-                    playAmbient();
-                }
             });
             
-            volumeSlider.addEventListener('input', updateVolume);
-            
-            // Add to cursor hover elements
-            const hoverElements = document.querySelectorAll('a, .social-card, .music-card, .avatar, .audio-toggle');
+            // Add hover effects to tabs
             const cursor = document.querySelector('.cursor');
-            
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hover');
+            if (cursor) {
+                const hoverElements = document.querySelectorAll('a, .social-card, .music-card, .avatar, .player-tab');
+                
+                hoverElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.classList.add('hover');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursor.classList.remove('hover');
+                    });
                 });
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
-                });
-            });
+            }
         }
         
         // Performance optimization
