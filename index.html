@@ -1,63 +1,1208 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Site</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sofe | Digital Creator</title>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8e44ad 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
+            --dark-gradient: radial-gradient(ellipse at center, #1a0c33 0%, #0c0c1e 40%, #000 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
+            --text-accent: #a855f7;
+            --neon-glow: 0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(168, 85, 247, 0.4), 0 0 80px rgba(168, 85, 247, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-            background-color: #f4f4f4;
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-gradient);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            cursor: none;
         }
+        
+        /* Custom cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            box-shadow: var(--neon-glow);
+        }
+        
+        .cursor.hover {
+            transform: scale(2);
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+        
+        /* Enhanced animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .cosmic-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 100px 50px, #fff, transparent),
+                radial-gradient(2px 2px at 400px 200px, #fff, transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 300px 100px, #fff, transparent),
+                radial-gradient(2px 2px at 500px 150px, #fff, transparent);
+            animation: starfield 20s linear infinite;
+        }
+        
+        @keyframes starfield {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100vh); }
+        }
+        
+        .nebula {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
+            animation: nebulaDrift 30s ease-in-out infinite alternate;
+        }
+        
+        @keyframes nebulaDrift {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(2deg) scale(1.1); }
+        }
+        
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(1);
+                filter: hue-rotate(0deg) blur(0px);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.5);
+                filter: hue-rotate(180deg) blur(1px);
+            }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #fff, transparent);
+            border-radius: 50%;
+            animation: shoot 3s linear infinite;
+        }
+        
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-200px) translateY(200px);
+                opacity: 0;
+            }
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+            animation: float 25s infinite linear;
+            filter: blur(1px);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
         .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        h1 {
-            color: #333;
+        
+        /* Enhanced profile section with 3D effects */
+        .profile-section {
             text-align: center;
+            margin-bottom: 4rem;
+            animation: slideInFromTop 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            perspective: 1000px;
         }
-        .highlight {
-            background-color: #e7f3ff;
-            padding: 15px;
-            border-left: 4px solid #2196F3;
-            margin: 20px 0;
+        
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transform-style: preserve-3d;
+        }
+        
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: avatarFloat 6s ease-in-out infinite;
+            box-shadow: 
+                0 0 0 4px rgba(255, 255, 255, 0.1),
+                var(--neon-glow),
+                inset 0 0 50px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .avatar::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            background: #0a0a0a;
+            z-index: 1;
+        }
+        
+        .avatar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+            animation: rotate 4s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .avatar-img {
+            width: calc(100% - 12px);
+            height: calc(100% - 12px);
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .avatar-text {
+            font-size: 4rem;
+            font-weight: 900;
+            position: relative;
+            z-index: 2;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .status-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #10b981 30%, #059669);
+            border-radius: 50%;
+            border: 4px solid #0a0a0a;
+            animation: statusPulse 2s infinite;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+        }
+        
+        @keyframes avatarFloat {
+            0%, 100% { 
+                transform: translateY(0) rotateX(0deg);
+            }
+            33% { 
+                transform: translateY(-10px) rotateX(2deg);
+            }
+            66% { 
+                transform: translateY(5px) rotateX(-1deg);
+            }
+        }
+        
+        @keyframes statusPulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+            }
+            50% { 
+                transform: scale(1.2); 
+                box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+            }
+        }
+        
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #e2e8f0 30%, #cbd5e1 60%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            animation: textShimmer 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textShimmer {
+            0% { filter: brightness(1) contrast(1); }
+            100% { filter: brightness(1.2) contrast(1.1); }
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .bio {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            line-height: 1.8;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* Next-gen music section with visualizer */
+        .music-section {
+            margin-bottom: 4rem;
+            width: 100%;
+            max-width: 700px;
+            animation: slideInFromLeft 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation-delay: 0.3s;
+            animation-fill-mode: both;
+        }
+        
+        .music-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .music-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.15), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .music-card:hover::before {
+            left: 100%;
+        }
+        
+        .music-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 30px 60px rgba(168, 85, 247, 0.3),
+                var(--neon-glow);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+        
+        .music-visualizer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 3px;
+            margin-bottom: 2rem;
+            height: 60px;
+        }
+        
+        .bar {
+            width: 4px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            animation: visualize 1.5s ease-in-out infinite;
+        }
+        
+        .bar:nth-child(1) { animation-delay: 0s; }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+        .bar:nth-child(4) { animation-delay: 0.3s; }
+        .bar:nth-child(5) { animation-delay: 0.4s; }
+        .bar:nth-child(6) { animation-delay: 0.3s; }
+        .bar:nth-child(7) { animation-delay: 0.2s; }
+        .bar:nth-child(8) { animation-delay: 0.1s; }
+        
+        @keyframes visualize {
+            0%, 100% { height: 10px; }
+            50% { height: 50px; }
+        }
+        
+        .music-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: musicPulse 4s infinite ease-in-out;
+            display: inline-block;
+        }
+        
+        @keyframes musicPulse {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+                filter: brightness(1);
+            }
+            25% { 
+                transform: scale(1.1) rotate(-5deg); 
+                filter: brightness(1.2);
+            }
+            50% { 
+                transform: scale(1.05) rotate(0deg); 
+                filter: brightness(1.1);
+            }
+            75% { 
+                transform: scale(1.1) rotate(5deg); 
+                filter: brightness(1.2);
+            }
+        }
+        
+        .music-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .song-info {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(168, 85, 247, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .song-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            animation: progressBar 3s linear infinite;
+        }
+        
+        @keyframes progressBar {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .song-name {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .song-artist {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            font-weight: 300;
+        }
+        
+        .music-note {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Revolutionary social cards */
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .social-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromBottom 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-card:nth-child(1) {
+            animation-delay: 0.5s;
+            animation-fill-mode: both;
+        }
+        
+        .social-card:nth-child(2) {
+            animation-delay: 0.7s;
+            animation-fill-mode: both;
+        }
+        
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .social-card:hover::before {
+            left: 100%;
+        }
+        
+        .social-card:hover {
+            transform: translateY(-20px) scale(1.03);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .instagram-card:hover {
+            background: linear-gradient(135deg, rgba(131, 58, 180, 0.2), rgba(253, 29, 29, 0.2), rgba(252, 176, 64, 0.2));
+            box-shadow: 0 40px 80px rgba(131, 58, 180, 0.3);
+        }
+        
+        .tiktok-card:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 80, 0.2), rgba(0, 240, 255, 0.2));
+            box-shadow: 0 40px 80px rgba(255, 0, 80, 0.3);
+        }
+        
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 2rem;
+            fill: currentColor;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .social-card:hover .social-icon {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+        
+        .instagram-card .social-icon {
+            color: #E4405F;
+        }
+        
+        .tiktok-card .social-icon {
+            color: #ff0050;
+        }
+        
+        .social-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .social-handle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .social-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat:hover {
+            transform: scale(1.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .social-btn {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+            z-index: -1;
+        }
+        
+        .social-btn:hover::before {
+            left: 100%;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+        }
+        
+        .tiktok-btn {
+            background: linear-gradient(135deg, #ff0050, #00f2ea, #ff0050);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .tiktok-btn:hover {
+            box-shadow: 0 20px 40px rgba(255, 0, 80, 0.6);
+        }
+        
+        /* Enhanced animations */
+        @keyframes slideInFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) rotateY(-20deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .name {
+                font-size: 3rem;
+            }
+            
+            .avatar {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .avatar-text {
+                font-size: 3rem;
+            }
+            
+            .social-links {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .social-card, .music-card {
+                padding: 2rem;
+            }
+            
+            .music-icon {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .avatar {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .avatar-text {
+                font-size: 2.5rem;
+            }
+            
+            .social-card, .music-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Scroll effects */
+        .parallax-element {
+            transition: transform 0.1s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to My GitHub Pages Site! 🎉</h1>
+<div class="cursor"></div>
+<div class="animated-bg">
+<div class="cosmic-bg"></div>
+<div class="nebula"></div>
+<div class="stars" id="stars"></div>
+<div class="floating-shapes" id="shapes"></div>
+</div>
+<div class="container">
+<div class="profile-section parallax-element">
+<div class="avatar-container">
+<div class="avatar">
+<img alt="Sofe" class="avatar-img" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="/>
+</div>
+<div class="status-indicator" title="Online"></div>
+</div>
+<h1 class="name">Sofe</h1>
+<p class="title">Digital Creator &amp; Storyteller</p>
+<p class="bio">Crafting visual stories that resonate across digital realms. Join me on this creative odyssey as I explore the intersection of art, life, and human connection through the lens of social media and beyond.</p>
+</div>
+<div class="music-section parallax-element">
+<div class="music-card">
+<div class="music-visualizer">
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+</div>
+<div class="music-icon">♫</div>
+<h3 class="music-title">Currently Vibing To</h3>
+<div class="song-info">
+<div class="song-name">Apocalypse</div>
+<div class="song-artist">Cigarettes After Sex</div>
+</div>
+<div class="music-note">This ethereal masterpiece fuels my creative flow and sets the perfect ambient backdrop for late-night editing sessions ✨</div>
+</div>
+</div>
+<div class="social-links">
+<div class="social-card instagram-card parallax-element">
+<svg class="social-icon" viewbox="0 0 24 24">
+<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+</svg>
+<h3 class="social-title">Instagram</h3>
+<p class="social-handle">@fucking_entj</p>
+<div class="social-stats">
+<div class="stat">
+<div class="stat-number">15.2K</div>
+<div class="stat-label">Followers</div>
+</div>
+<div class="stat">
+<div class="stat-number">1,247</div>
+<div class="stat-label">Posts</div>
+</div>
+<div class="stat">
+<div class="stat-number">3.8M</div>
+<div class="stat-label">Likes</div>
+</div>
+</div>
+<a class="social-btn" href="https://www.instagram.com/fucking.entj/" target="_blank">Follow Journey</a>
+</div>
+<div class="social-card tiktok-card parallax-element">
+<svg class="social-icon" viewbox="0 0 24 24">
+<path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path>
+</svg>
+<h3 class="social-title">TikTok</h3>
+<p class="social-handle">@y9qr</p>
+<div class="social-stats">
+<div class="stat">
+<div class="stat-number">42.9K</div>
+<div class="stat-label">Followers</div>
+</div>
+<div class="stat">
+<div class="stat-number">156</div>
+<div class="stat-label">Videos</div>
+</div>
+<div class="stat">
+<div class="stat-number">2.1M</div>
+<div class="stat-label">Likes</div>
+</div>
+</div>
+<a class="social-btn tiktok-btn" href="https://tiktok.com/@y9qr" target="_blank">Join Vibe</a>
+</div>
+</div>
+</div>
+<script>
+        // Enhanced performance-optimized animations
+        class ProfileEnhancer {
+            constructor() {
+                this.cursor = document.querySelector('.cursor');
+                this.isMouseMoving = false;
+                this.mouseTimeout = null;
+                this.init();
+            }
+            
+            init() {
+                this.createStars();
+                this.createShootingStars();
+                this.createFloatingShapes();
+                this.setupCursor();
+                this.setupInteractivity();
+                this.setupScrollEffects();
+                this.setupIntersectionObserver();
+            }
+            
+            createStars() {
+                const starsContainer = document.getElementById('stars');
+                const numStars = 120;
+                
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.width = Math.random() * 4 + 1 + 'px';
+                    star.style.height = star.style.width;
+                    star.style.animationDelay = Math.random() * 4 + 's';
+                    star.style.animationDuration = (Math.random() * 6 + 4) + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            createShootingStars() {
+                const starsContainer = document.getElementById('stars');
+                
+                setInterval(() => {
+                    if (Math.random() < 0.1) { // 10% chance every interval
+                        const shootingStar = document.createElement('div');
+                        shootingStar.className = 'shooting-star';
+                        shootingStar.style.left = Math.random() * 100 + '%';
+                        shootingStar.style.top = Math.random() * 50 + '%';
+                        starsContainer.appendChild(shootingStar);
+                        
+                        setTimeout(() => {
+                            shootingStar.remove();
+                        }, 3000);
+                    }
+                }, 2000);
+            }
+            
+            createFloatingShapes() {
+                const shapesContainer = document.getElementById('shapes');
+                const numShapes = 20;
+                
+                for (let i = 0; i < numShapes; i++) {
+                    const shape = document.createElement('div');
+                    shape.className = 'shape';
+                    shape.style.left = Math.random() * 100 + '%';
+                    shape.style.width = Math.random() * 150 + 30 + 'px';
+                    shape.style.height = shape.style.width;
+                    shape.style.animationDelay = Math.random() * 25 + 's';
+                    shape.style.animationDuration = (Math.random() * 15 + 25) + 's';
+                    shapesContainer.appendChild(shape);
+                }
+            }
+            
+            setupCursor() {
+                let mouseX = 0, mouseY = 0;
+                let cursorX = 0, cursorY = 0;
+                
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    this.isMouseMoving = true;
+                    
+                    clearTimeout(this.mouseTimeout);
+                    this.mouseTimeout = setTimeout(() => {
+                        this.isMouseMoving = false;
+                    }, 100);
+                });
+                
+                // Smooth cursor movement
+                const updateCursor = () => {
+                    cursorX += (mouseX - cursorX) * 0.1;
+                    cursorY += (mouseY - cursorY) * 0.1;
+                    
+                    this.cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
+                    requestAnimationFrame(updateCursor);
+                };
+                updateCursor();
+                
+                // Cursor hover effects
+                const hoverElements = document.querySelectorAll('a, .social-card, .music-card, .avatar');
+                hoverElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        this.cursor.classList.add('hover');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        this.cursor.classList.remove('hover');
+                    });
+                });
+            }
+            
+            setupInteractivity() {
+                const cards = document.querySelectorAll('.social-card, .music-card');
+                const avatar = document.querySelector('.avatar-container');
+                
+                // Enhanced card interactions
+                cards.forEach(card => {
+                    card.addEventListener('mouseenter', (e) => {
+                        card.style.zIndex = '10';
+                        this.createRipple(e, card);
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        card.style.zIndex = '1';
+                    });
+                    
+                    card.addEventListener('mousemove', (e) => {
+                        this.tiltCard(e, card);
+                    });
+                });
+                
+                // Avatar special effects
+                if (avatar) {
+                    avatar.addEventListener('click', () => {
+                        avatar.style.animation = 'none';
+                        setTimeout(() => {
+                            avatar.style.animation = 'avatarFloat 6s ease-in-out infinite';
+                        }, 10);
+                        
+                        this.createParticleExplosion(avatar);
+                    });
+                }
+                
+                // Stats animation on hover
+                const stats = document.querySelectorAll('.stat');
+                stats.forEach(stat => {
+                    stat.addEventListener('mouseenter', () => {
+                        const number = stat.querySelector('.stat-number');
+                        this.animateNumber(number);
+                    });
+                });
+            }
+            
+            tiltCard(e, card) {
+                const rect = card.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const rotateX = (e.clientY - centerY) / 10;
+                const rotateY = (centerX - e.clientX) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-20px) scale(1.03)`;
+            }
+            
+            createRipple(e, card) {
+                const ripple = document.createElement('div');
+                const rect = card.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    animation: ripple 0.6s linear;
+                    z-index: 1;
+                `;
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes ripple {
+                        to {
+                            transform: scale(2);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                card.appendChild(ripple);
+                setTimeout(() => {
+                    ripple.remove();
+                    style.remove();
+                }, 600);
+            }
+            
+            createParticleExplosion(element) {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.style.cssText = `
+                        position: fixed;
+                        width: 6px;
+                        height: 6px;
+                        background: linear-gradient(45deg, #667eea, #764ba2);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 1000;
+                        left: ${centerX}px;
+                        top: ${centerY}px;
+                    `;
+                    
+                    const angle = (Math.PI * 2 * i) / 20;
+                    const velocity = Math.random() * 100 + 50;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
+                    
+                    document.body.appendChild(particle);
+                    
+                    let x = centerX, y = centerY;
+                    let opacity = 1;
+                    
+                    const animate = () => {
+                        x += vx * 0.02;
+                        y += vy * 0.02;
+                        opacity -= 0.02;
+                        
+                        particle.style.left = x + 'px';
+                        particle.style.top = y + 'px';
+                        particle.style.opacity = opacity;
+                        
+                        if (opacity > 0) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            particle.remove();
+                        }
+                    };
+                    animate();
+                }
+            }
+            
+            animateNumber(numberElement) {
+                const originalText = numberElement.textContent;
+                const isDecimal = originalText.includes('.');
+                const targetNumber = parseFloat(originalText.replace(/[^\d.]/g, ''));
+                const suffix = originalText.replace(/[\d.]/g, '');
+                
+                let current = 0;
+                const increment = targetNumber / 30;
+                
+                const animate = () => {
+                    current += increment;
+                    if (current >= targetNumber) {
+                        numberElement.textContent = originalText;
+                        return;
+                    }
+                    
+                    const displayNumber = isDecimal ? current.toFixed(1) : Math.floor(current);
+                    numberElement.textContent = displayNumber + suffix;
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+            
+            setupScrollEffects() {
+                let ticking = false;
+                
+                const updateParallax = () => {
+                    const scrolled = window.pageYOffset;
+                    const elements = document.querySelectorAll('.parallax-element');
+                    
+                    elements.forEach((element, index) => {
+                        const speed = (index + 1) * 0.05;
+                        const yPos = -(scrolled * speed);
+                        element.style.transform = `translateY(${yPos}px)`;
+                    });
+                    
+                    ticking = false;
+                };
+                
+                document.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateParallax);
+                        ticking = true;
+                    }
+                });
+            }
+            
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animationPlayState = 'running';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                const animatedElements = document.querySelectorAll('.social-card, .music-card, .profile-section');
+                animatedElements.forEach(el => observer.observe(el));
+            }
+        }
         
-        <div class="highlight">
-            <p><strong>Congratulations!</strong> Your free GitHub Pages domain is now active!</p>
-        </div>
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProfileEnhancer();
+        });
         
-        <p>This is your first GitHub Pages website. You can:</p>
-        
-        <ul>
-            <li>Edit the HTML files to customize your site</li>
-            <li>Add CSS for better styling</li>
-            <li>Include JavaScript for interactivity</li>
-            <li>Create multiple pages</li>
-            <li>Use Jekyll for a blog</li>
-        </ul>
-        
-        <p>Your site will be available at: <strong>https://sofeedomain.github.io/my-github-pages-site</strong></p>
-        
-        <footer style="margin-top: 40px; text-align: center; color: #666;">
-            <p>Powered by GitHub Pages | Last updated: <span id="date"></span></p>
-        </footer>
-    </div>
-    
-    <script>
-        document.getElementById('date').textContent = new Date().toLocaleDateString();
+        // Performance optimization
+        document.addEventListener('visibilitychange', () => {
+            const animations = document.querySelectorAll('*');
+            if (document.hidden) {
+                animations.forEach(el => {
+                    el.style.animationPlayState = 'paused';
+                });
+            } else {
+                animations.forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }
+        });
     </script>
 </body>
 </html>
