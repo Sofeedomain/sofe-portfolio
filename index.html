@@ -1229,92 +1229,233 @@
             transition: transform 0.1s ease-out;
         }
         
-        /* Background Music Player */
-        .background-music {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            background: var(--glass-bg);
+        /* Centered Music Player */
+        .music-player-section {
+            width: 100%;
+            max-width: 800px;
+            margin: 3rem 0;
+            animation: slideInFromBottom 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation-delay: 1.2s;
+            animation-fill-mode: both;
+        }
+        
+        .music-player {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.9) 100%);
             backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1rem;
+            border: 1px solid rgba(255, 0, 0, 0.15);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(255, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .music-player::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .music-player:hover::before {
+            left: 100%;
+        }
+        
+        .music-player:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 0, 0, 0.2),
+                var(--red-edge-glow);
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+        
+        .player-header {
+            margin-bottom: 2rem;
+        }
+        
+        .player-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .player-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .current-track-info {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+        }
+        
+        .track-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .track-artist {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .track-status {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 1rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            min-width: 280px;
-            transform: translateY(100px);
-            opacity: 0;
-            animation: slideUp 1s ease 2s forwards;
+            font-size: 0.9rem;
+            color: var(--text-accent);
         }
         
-        @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .status-icon {
+            animation: pulse 2s infinite;
         }
         
-        .background-music:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.3);
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        .music-toggle {
-            background: var(--accent-gradient);
-            border: none;
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            color: white;
+            color: var(--text-primary);
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            backdrop-filter: blur(10px);
         }
         
-        .music-toggle:hover {
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--text-accent);
+            color: var(--text-accent);
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
         }
         
-        .music-info {
-            flex: 1;
-            min-width: 0;
+        .play-pause-btn {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-gradient);
+            font-size: 1.8rem;
+            border: 2px solid rgba(255, 0, 0, 0.3);
         }
         
-        .music-track {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.2rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .play-pause-btn:hover {
+            background: var(--secondary-gradient);
+            border-color: rgba(255, 0, 0, 0.6);
+            color: white;
+            box-shadow: 0 0 25px rgba(220, 20, 60, 0.6);
         }
         
-        .music-status {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+        .secondary-controls {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
         }
         
-        .shuffle-icon {
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .volume-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        
+        .volume-btn:hover {
             color: var(--text-accent);
-            animation: pulse 2s infinite;
+            background: rgba(255, 0, 0, 0.1);
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .volume-slider {
+            width: 120px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
+        }
+        
+        .shuffle-repeat-controls {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .mode-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-btn.active {
+            background: rgba(220, 20, 60, 0.2);
+            border-color: var(--text-accent);
+            color: var(--text-accent);
+        }
+        
+        .mode-btn:hover {
+            border-color: var(--text-accent);
+            color: var(--text-accent);
         }
         
         .hidden-player {
@@ -1322,10 +1463,30 @@
         }
         
         @media (max-width: 768px) {
-            .background-music {
-                bottom: 1rem;
-                right: 1rem;
-                min-width: 250px;
+            .music-player {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .player-controls {
+                gap: 1rem;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            
+            .play-pause-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6rem;
+            }
+            
+            .secondary-controls {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
         
@@ -1425,24 +1586,67 @@
 </div>
 </div>
 
-<!-- Background Music Player -->
-<div class="background-music" id="backgroundMusic">
-    <button class="music-toggle" id="musicToggle">
-        ▶️
-    </button>
-    <div class="music-info">
-        <div class="music-track" id="currentTrack">idkwit Playlist</div>
-        <div class="music-status">
-            <span class="shuffle-icon">🔀</span>
-            <span>Shuffle Mode</span>
+    <!-- Centered Music Player -->
+    <div class="music-player-section">
+        <div class="music-player">
+            <div class="player-header">
+                <h2 class="player-title">Music Player</h2>
+                <p class="player-subtitle">Currently Playing: idkwit Playlist</p>
+            </div>
+            
+            <div class="current-track-info">
+                <div class="track-name" id="currentTrackName">Loading Track...</div>
+                <div class="track-artist" id="currentTrackArtist">Unknown Artist</div>
+                <div class="track-status">
+                    <span class="status-icon">🎵</span>
+                    <span id="playStatus">Ready to Play</span>
+                    <span class="status-icon">🔀</span>
+                    <span>Shuffle</span>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <button class="control-btn" id="previousBtn" title="Previous Track">
+                    ⏮️
+                </button>
+                <button class="control-btn" id="backwardBtn" title="Rewind">
+                    ⏪
+                </button>
+                <button class="control-btn play-pause-btn" id="playPauseBtn" title="Play/Pause">
+                    ▶️
+                </button>
+                <button class="control-btn" id="forwardBtn" title="Fast Forward">
+                    ⏩
+                </button>
+                <button class="control-btn" id="nextBtn" title="Next Track">
+                    ⏭️
+                </button>
+            </div>
+            
+            <div class="secondary-controls">
+                <div class="volume-control">
+                    <button class="volume-btn" id="volumeBtn" title="Volume">
+                        🔊
+                    </button>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+                </div>
+                
+                <div class="shuffle-repeat-controls">
+                    <button class="mode-btn" id="shuffleBtn" title="Shuffle">
+                        🔀 Shuffle
+                    </button>
+                    <button class="mode-btn" id="repeatBtn" title="Repeat">
+                        🔁 Repeat
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- Hidden Spotify Player for Background Music -->
-<div class="hidden-player">
-    <iframe id="backgroundPlayer" src="" width="0" height="0" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-</div>
+    
+    <!-- Hidden Spotify Player -->
+    <div class="hidden-player">
+        <iframe id="backgroundPlayer" src="https://open.spotify.com/embed/playlist/0XSCTU5ub6ETh0RCveuTnB?utm_source=generator&theme=0&autoplay=1" width="0" height="0" frameborder="0" allowtransparency="true" allow="encrypted-media; autoplay"></iframe>
+    </div>
 
 <script>
         // Enhanced performance-optimized animations
@@ -1836,113 +2040,95 @@
             }
         }
         
-        // Background Music Player
-        class BackgroundMusicPlayer {
+        // Centered Music Player Controller (uses hidden Spotify iframe)
+        class CenteredMusicPlayer {
             constructor() {
                 this.isPlaying = false;
-                this.player = document.getElementById('backgroundPlayer');
-                this.toggle = document.getElementById('musicToggle');
-                this.trackDisplay = document.getElementById('currentTrack');
-                this.playlistUrl = 'https://open.spotify.com/embed/playlist/0XSCTU5ub6ETh0RCveuTnB?utm_source=generator&theme=0'; // Default playlist
+                this.iframe = document.getElementById('backgroundPlayer');
+                this.playPauseBtn = document.getElementById('playPauseBtn');
+                this.prevBtn = document.getElementById('previousBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.fwdBtn = document.getElementById('forwardBtn');
+                this.backBtn = document.getElementById('backwardBtn');
+                this.shuffleBtn = document.getElementById('shuffleBtn');
+                this.repeatBtn = document.getElementById('repeatBtn');
+                this.volumeSlider = document.getElementById('volumeSlider');
+                this.statusEl = document.getElementById('playStatus');
+                this.trackNameEl = document.getElementById('currentTrackName');
+                this.trackArtistEl = document.getElementById('currentTrackArtist');
+                this.playlistUrl = 'https://open.spotify.com/embed/playlist/0XSCTU5ub6ETh0RCveuTnB?utm_source=generator&theme=0';
                 this.init();
             }
-            
             init() {
-                this.setupEventListeners();
-                this.checkAutoplay();
-            }
-            
-            setupEventListeners() {
-                this.toggle.addEventListener('click', () => {
-                    this.togglePlayback();
-                });
+                // Basic UI bindings
+                this.playPauseBtn?.addEventListener('click', () => this.toggle());
+                this.prevBtn?.addEventListener('click', () => this.notifyLimited('Previous'));
+                this.nextBtn?.addEventListener('click', () => this.notifyLimited('Next'));
+                this.fwdBtn?.addEventListener('click', () => this.notifyLimited('Fast forward'));
+                this.backBtn?.addEventListener('click', () => this.notifyLimited('Rewind'));
+                this.shuffleBtn?.addEventListener('click', () => this.toggleMode(this.shuffleBtn));
+                this.repeatBtn?.addEventListener('click', () => this.toggleMode(this.repeatBtn));
+                this.volumeSlider?.addEventListener('input', () => this.showVolumeInfo());
                 
-                // Update player status
-                this.player.addEventListener('load', () => {
-                    this.updateTrackInfo();
-                });
+                // Autoplay will likely be blocked by browsers until user interacts.
+                // We'll try once after a small delay; if blocked, user can press Play.
+                setTimeout(() => {
+                    this.tryAutoplay();
+                }, 1500);
             }
-            
-            togglePlayback() {
-                if (!this.playlistUrl) {
-                    this.showPlaylistPrompt();
-                    return;
+            tryAutoplay() {
+                // Set src with autoplay param. If browser blocks, nothing plays until user clicks Play.
+                if (!this.isPlaying) {
+                    this.iframe.src = this.playlistUrl + '&autoplay=1';
+                    this.isPlaying = true;
+                    this.updateUIPlaying();
                 }
-                
+            }
+            toggle() {
                 if (this.isPlaying) {
                     this.pause();
                 } else {
                     this.play();
                 }
             }
-            
             play() {
-                if (this.playlistUrl) {
-                    this.player.src = this.playlistUrl + '&autoplay=1';
-                    this.isPlaying = true;
-                    this.toggle.innerHTML = '⏸️';
-                    this.trackDisplay.textContent = 'Playing Playlist';
-                    
-                    // Add playing animation
-                    document.querySelector('.background-music').classList.add('playing');
-                }
+                this.iframe.src = this.playlistUrl + '&autoplay=1';
+                this.isPlaying = true;
+                this.updateUIPlaying();
             }
-            
             pause() {
-                this.player.src = '';
+                // Clearing src is the most reliable way to stop the Spotify embed from playing without SDK.
+                this.iframe.src = '';
                 this.isPlaying = false;
-                this.toggle.innerHTML = '▶️';
-                this.trackDisplay.textContent = 'Music Paused';
-                
-                // Remove playing animation
-                document.querySelector('.background-music').classList.remove('playing');
+                this.updateUIPaused();
             }
-            
-            setPlaylist(url) {
-                // Convert Spotify playlist URL to embed URL
-                if (url.includes('spotify.com/playlist/')) {
-                    const playlistId = url.match(/playlist\/([a-zA-Z0-9]+)/)[1];
-                    this.playlistUrl = `https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`;
-                } else if (url.includes('open.spotify.com/embed/playlist/')) {
-                    this.playlistUrl = url;
-                } else {
-                    console.error('Invalid Spotify playlist URL');
-                    return false;
-                }
-                
-                this.trackDisplay.textContent = 'Playlist Ready';
-                return true;
+            updateUIPlaying() {
+                if (this.playPauseBtn) this.playPauseBtn.textContent = '⏸️';
+                if (this.statusEl) this.statusEl.textContent = 'Playing';
+                if (this.trackNameEl) this.trackNameEl.textContent = 'idkwit Playlist';
+                if (this.trackArtistEl) this.trackArtistEl.textContent = 'Spotify';
             }
-            
-            showPlaylistPrompt() {
-                const url = prompt('Please enter your Spotify playlist URL:');
-                if (url && this.setPlaylist(url)) {
-                    this.play();
-                } else if (url) {
-                    alert('Please enter a valid Spotify playlist URL');
-                }
+            updateUIPaused() {
+                if (this.playPauseBtn) this.playPauseBtn.textContent = '▶️';
+                if (this.statusEl) this.statusEl.textContent = 'Paused';
             }
-            
-            updateTrackInfo() {
-                // This would update track info if we had access to Spotify API
-                if (this.isPlaying) {
-                    this.trackDisplay.textContent = 'Playing Playlist';
-                }
+            toggleMode(btn) {
+                btn.classList.toggle('active');
             }
-            
-            checkAutoplay() {
-                // Check if user has previously set a playlist
-                const savedPlaylist = localStorage.getItem('backgroundPlaylist');
-                if (savedPlaylist) {
-                    this.playlistUrl = savedPlaylist;
-                    this.trackDisplay.textContent = 'Playlist Ready';
-                }
+            notifyLimited(action) {
+                // Inform user that deep control requires Spotify SDK (auth).
+                this.flashStatus(`${action} not available for Spotify embeds`);
             }
-            
-            savePlaylist() {
-                if (this.playlistUrl) {
-                    localStorage.setItem('backgroundPlaylist', this.playlistUrl);
-                }
+            flashStatus(text) {
+                if (!this.statusEl) return;
+                const previous = this.statusEl.textContent;
+                this.statusEl.textContent = text;
+                setTimeout(() => { this.statusEl.textContent = previous; }, 1800);
+            }
+            showVolumeInfo() {
+                // Volume cannot be controlled on Spotify embed without SDK; just reflect intent in UI.
+                const val = this.volumeSlider?.value;
+                this.flashStatus(`Volume: ${val}% (UI only)`);
             }
         }
         
@@ -1951,7 +2137,7 @@
             new ProfileEnhancer();
             setupMusicPlayers();
             new VisitorCounter();
-            new BackgroundMusicPlayer();
+            new CenteredMusicPlayer();
         });
         
         // Music Players Setup
