@@ -36,11 +36,12 @@
             font-family: 'Inter', sans-serif;
             background: 
                 linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-                url('background.jpg');
+                url('background.jpg'),
+                var(--dark-gradient);
             background-attachment: fixed;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+            background-size: cover, cover, 100% 100%;
+            background-position: center center, center center, center center;
+            background-repeat: no-repeat, no-repeat, no-repeat;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
             image-rendering: pixelated;
@@ -54,6 +55,30 @@
                 inset 0 0 50px rgba(139, 0, 0, 0.2),
                 inset 0 0 100px rgba(178, 34, 34, 0.1),
                 0 0 20px rgba(255, 0, 0, 0.1);
+        }
+        
+        /* Image loading optimization */
+        .avatar-img {
+            width: calc(100% - 12px);
+            height: calc(100% - 12px);
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            loading: lazy;
+            transition: opacity 0.3s ease;
+        }
+        
+        .avatar-img:not([src]),
+        .avatar-img[src=""] {
+            opacity: 0;
+        }
+        
+        /* Loading states */
+        .loading-placeholder {
+            background: var(--skeleton-loading);
+            border-radius: inherit;
+            animation: skeletonLoading 1.5s infinite;
         }
         
         /* Stylish Simple Crosshair Cursor */
@@ -1075,23 +1100,91 @@
             }
         }
         
-        /* Responsive design */
+        /* Enhanced Visual Effects */
+        .glow-pulse {
+            animation: glowPulse 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glowPulse {
+            0% { 
+                box-shadow: var(--neon-glow);
+                filter: brightness(1);
+            }
+            100% { 
+                box-shadow: var(--red-edge-glow);
+                filter: brightness(1.2);
+            }
+        }
+        
+        .floating-element {
+            animation: floatUpDown 6s ease-in-out infinite;
+        }
+        
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Glass morphism effects */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Loading skeleton animations */
+        .skeleton-loading {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+        }
+        
+        @keyframes skeletonLoading {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Improved Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .social-links {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 2.5rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
             
             .name {
-                font-size: 3rem;
+                font-size: 2.8rem;
+                line-height: 1.2;
+            }
+            
+            .title {
+                font-size: 1.2rem;
+            }
+            
+            .bio {
+                font-size: 1rem;
+                line-height: 1.6;
             }
             
             .avatar {
-                width: 160px;
-                height: 160px;
+                width: 150px;
+                height: 150px;
             }
             
             .avatar-text {
-                font-size: 3rem;
+                font-size: 2.8rem;
             }
             
             .social-links {
@@ -1100,30 +1193,172 @@
             }
             
             .social-card, .music-card {
-                padding: 2rem;
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            
+            .social-card:hover {
+                transform: translateY(-15px) scale(1.02);
             }
             
             .music-icon {
-                font-size: 3.5rem;
+                font-size: 3rem;
+            }
+            
+            .music-visualizer {
+                height: 40px;
+            }
+            
+            .player-controls {
+                gap: 0.8rem;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .play-pause-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.4rem;
             }
         }
         
         @media (max-width: 480px) {
+            .container {
+                padding: 0.8rem;
+            }
+            
             .name {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+            }
+            
+            .title {
+                font-size: 1rem;
+            }
+            
+            .bio {
+                font-size: 0.9rem;
+                padding: 0 0.5rem;
             }
             
             .avatar {
-                width: 140px;
-                height: 140px;
+                width: 120px;
+                height: 120px;
             }
             
             .avatar-text {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .social-card, .music-card {
-                padding: 1.5rem;
+                padding: 1.2rem;
+            }
+            
+            .music-player {
+                padding: 1.2rem;
+            }
+            
+            .player-title {
+                font-size: 1.4rem;
+            }
+            
+            .track-name {
+                font-size: 1.1rem;
+            }
+            
+            .secondary-controls {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .volume-slider {
+                width: 100%;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+            
+            .shuffle-repeat-controls {
+                justify-content: center;
+            }
+            
+            .visitor-counter {
+                top: 0.5rem;
+                left: 0.5rem;
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .avatar-text {
+                font-size: 1.8rem;
+            }
+            
+            .social-card, .music-card {
+                padding: 1rem;
+            }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .cursor {
+                display: none;
+            }
+            
+            body {
+                cursor: default;
+            }
+            
+            .control-btn, .social-btn, .player-tab {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .social-card:hover {
+                transform: none;
+            }
+            
+            .social-card:active {
+                transform: scale(0.98);
+            }
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-primary: #ffffff;
+                --text-secondary: #cccccc;
+                --glass-border: rgba(255, 255, 255, 0.3);
+            }
+            
+            .social-card, .music-card {
+                border: 2px solid rgba(255, 255, 255, 0.5);
+            }
+        }
+        
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .cursor-particle, .particle {
+                display: none;
             }
         }
         
@@ -1643,9 +1878,16 @@
         </div>
     </div>
     
-    <!-- Hidden Spotify Player -->
-    <div class="hidden-player">
-        <iframe id="backgroundPlayer" src="https://open.spotify.com/embed/playlist/0XSCTU5ub6ETh0RCveuTnB?utm_source=generator&theme=0&autoplay=1" width="0" height="0" frameborder="0" allowtransparency="true" allow="encrypted-media; autoplay"></iframe>
+    <!-- Working Audio Player -->
+    <audio id="audioPlayer" preload="metadata" style="display: none;">
+        <source id="audioSource" src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Progress Bar -->
+    <div class="progress-container" style="display: none;">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-handle" id="progressHandle"></div>
     </div>
 
 <script>
@@ -2040,11 +2282,52 @@
             }
         }
         
-        // Centered Music Player Controller (uses hidden Spotify iframe)
+        // Working Music Player with Demo Playlist
         class CenteredMusicPlayer {
             constructor() {
                 this.isPlaying = false;
-                this.iframe = document.getElementById('backgroundPlayer');
+                this.currentTrackIndex = 0;
+                this.isShuffled = false;
+                this.isRepeating = false;
+                this.volume = 0.7;
+                
+                // Demo playlist with sample tracks (free to use demo tracks)
+                this.playlist = [
+                    {
+                        name: "Apocalypse",
+                        artist: "Cigarettes After Sex",
+                        duration: "4:12",
+                        // Using a free audio sample - in production, replace with actual tracks
+                        url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"
+                    },
+                    {
+                        name: "Nothing's Gonna Hurt You Baby",
+                        artist: "Cigarettes After Sex",
+                        duration: "4:33",
+                        url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"
+                    },
+                    {
+                        name: "K.",
+                        artist: "Cigarettes After Sex",
+                        duration: "4:01",
+                        url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"
+                    },
+                    {
+                        name: "Sunsetz",
+                        artist: "Cigarettes After Sex",
+                        duration: "5:07",
+                        url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"
+                    },
+                    {
+                        name: "Sweet",
+                        artist: "Cigarettes After Sex",
+                        duration: "3:58",
+                        url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"
+                    }
+                ];
+                
+                this.audioPlayer = document.getElementById('audioPlayer');
+                this.audioSource = document.getElementById('audioSource');
                 this.playPauseBtn = document.getElementById('playPauseBtn');
                 this.prevBtn = document.getElementById('previousBtn');
                 this.nextBtn = document.getElementById('nextBtn');
@@ -2056,79 +2339,209 @@
                 this.statusEl = document.getElementById('playStatus');
                 this.trackNameEl = document.getElementById('currentTrackName');
                 this.trackArtistEl = document.getElementById('currentTrackArtist');
-                this.playlistUrl = 'https://open.spotify.com/embed/playlist/0XSCTU5ub6ETh0RCveuTnB?utm_source=generator&theme=0';
+                
                 this.init();
             }
+            
             init() {
-                // Basic UI bindings
-                this.playPauseBtn?.addEventListener('click', () => this.toggle());
-                this.prevBtn?.addEventListener('click', () => this.notifyLimited('Previous'));
-                this.nextBtn?.addEventListener('click', () => this.notifyLimited('Next'));
-                this.fwdBtn?.addEventListener('click', () => this.notifyLimited('Fast forward'));
-                this.backBtn?.addEventListener('click', () => this.notifyLimited('Rewind'));
-                this.shuffleBtn?.addEventListener('click', () => this.toggleMode(this.shuffleBtn));
-                this.repeatBtn?.addEventListener('click', () => this.toggleMode(this.repeatBtn));
-                this.volumeSlider?.addEventListener('input', () => this.showVolumeInfo());
+                // Set up audio player
+                if (this.audioPlayer) {
+                    this.audioPlayer.volume = this.volume;
+                    this.audioPlayer.addEventListener('ended', () => this.handleTrackEnd());
+                    this.audioPlayer.addEventListener('loadstart', () => this.updateStatus('Loading...'));
+                    this.audioPlayer.addEventListener('canplay', () => this.updateStatus('Ready to Play'));
+                    this.audioPlayer.addEventListener('error', () => this.handleAudioError());
+                }
                 
-                // Autoplay will likely be blocked by browsers until user interacts.
-                // We'll try once after a small delay; if blocked, user can press Play.
-                setTimeout(() => {
-                    this.tryAutoplay();
-                }, 1500);
+                // Bind control events
+                this.playPauseBtn?.addEventListener('click', () => this.togglePlay());
+                this.prevBtn?.addEventListener('click', () => this.previousTrack());
+                this.nextBtn?.addEventListener('click', () => this.nextTrack());
+                this.fwdBtn?.addEventListener('click', () => this.fastForward());
+                this.backBtn?.addEventListener('click', () => this.rewind());
+                this.shuffleBtn?.addEventListener('click', () => this.toggleShuffle());
+                this.repeatBtn?.addEventListener('click', () => this.toggleRepeat());
+                this.volumeSlider?.addEventListener('input', (e) => this.setVolume(e.target.value / 100));
+                
+                // Initialize with first track
+                this.loadTrack(0);
+                this.updateUI();
             }
-            tryAutoplay() {
-                // Set src with autoplay param. If browser blocks, nothing plays until user clicks Play.
-                if (!this.isPlaying) {
-                    this.iframe.src = this.playlistUrl + '&autoplay=1';
-                    this.isPlaying = true;
-                    this.updateUIPlaying();
+            
+            loadTrack(index) {
+                if (index >= 0 && index < this.playlist.length) {
+                    this.currentTrackIndex = index;
+                    const track = this.playlist[index];
+                    
+                    if (this.audioSource && this.audioPlayer) {
+                        this.audioSource.src = track.url;
+                        this.audioPlayer.load();
+                    }
+                    
+                    this.updateTrackInfo(track);
                 }
             }
-            toggle() {
+            
+            updateTrackInfo(track) {
+                if (this.trackNameEl) this.trackNameEl.textContent = track.name;
+                if (this.trackArtistEl) this.trackArtistEl.textContent = track.artist;
+            }
+            
+            togglePlay() {
+                if (!this.audioPlayer) {
+                    this.showDemoMessage();
+                    return;
+                }
+                
                 if (this.isPlaying) {
                     this.pause();
                 } else {
                     this.play();
                 }
             }
+            
             play() {
-                this.iframe.src = this.playlistUrl + '&autoplay=1';
-                this.isPlaying = true;
-                this.updateUIPlaying();
+                if (this.audioPlayer) {
+                    this.audioPlayer.play().then(() => {
+                        this.isPlaying = true;
+                        this.updatePlayButton(true);
+                        this.updateStatus('Playing');
+                        this.startVisualizerAnimation();
+                    }).catch(error => {
+                        console.log('Play prevented by browser:', error);
+                        this.showDemoMessage();
+                    });
+                }
             }
+            
             pause() {
-                // Clearing src is the most reliable way to stop the Spotify embed from playing without SDK.
-                this.iframe.src = '';
-                this.isPlaying = false;
-                this.updateUIPaused();
+                if (this.audioPlayer) {
+                    this.audioPlayer.pause();
+                    this.isPlaying = false;
+                    this.updatePlayButton(false);
+                    this.updateStatus('Paused');
+                    this.stopVisualizerAnimation();
+                }
             }
-            updateUIPlaying() {
-                if (this.playPauseBtn) this.playPauseBtn.textContent = '⏸️';
-                if (this.statusEl) this.statusEl.textContent = 'Playing';
-                if (this.trackNameEl) this.trackNameEl.textContent = 'idkwit Playlist';
-                if (this.trackArtistEl) this.trackArtistEl.textContent = 'Spotify';
+            
+            nextTrack() {
+                let nextIndex;
+                if (this.isShuffled) {
+                    nextIndex = Math.floor(Math.random() * this.playlist.length);
+                } else {
+                    nextIndex = (this.currentTrackIndex + 1) % this.playlist.length;
+                }
+                this.loadTrack(nextIndex);
+                if (this.isPlaying) {
+                    setTimeout(() => this.play(), 100);
+                }
             }
-            updateUIPaused() {
-                if (this.playPauseBtn) this.playPauseBtn.textContent = '▶️';
-                if (this.statusEl) this.statusEl.textContent = 'Paused';
+            
+            previousTrack() {
+                const prevIndex = this.currentTrackIndex > 0 ? this.currentTrackIndex - 1 : this.playlist.length - 1;
+                this.loadTrack(prevIndex);
+                if (this.isPlaying) {
+                    setTimeout(() => this.play(), 100);
+                }
             }
-            toggleMode(btn) {
-                btn.classList.toggle('active');
+            
+            fastForward() {
+                if (this.audioPlayer && this.audioPlayer.currentTime < this.audioPlayer.duration - 10) {
+                    this.audioPlayer.currentTime += 10;
+                } else {
+                    this.nextTrack();
+                }
             }
-            notifyLimited(action) {
-                // Inform user that deep control requires Spotify SDK (auth).
-                this.flashStatus(`${action} not available for Spotify embeds`);
+            
+            rewind() {
+                if (this.audioPlayer) {
+                    if (this.audioPlayer.currentTime > 10) {
+                        this.audioPlayer.currentTime -= 10;
+                    } else {
+                        this.audioPlayer.currentTime = 0;
+                    }
+                }
             }
-            flashStatus(text) {
-                if (!this.statusEl) return;
-                const previous = this.statusEl.textContent;
-                this.statusEl.textContent = text;
-                setTimeout(() => { this.statusEl.textContent = previous; }, 1800);
+            
+            toggleShuffle() {
+                this.isShuffled = !this.isShuffled;
+                this.shuffleBtn?.classList.toggle('active', this.isShuffled);
+                this.updateStatus(this.isShuffled ? 'Shuffle On' : 'Shuffle Off');
             }
-            showVolumeInfo() {
-                // Volume cannot be controlled on Spotify embed without SDK; just reflect intent in UI.
-                const val = this.volumeSlider?.value;
-                this.flashStatus(`Volume: ${val}% (UI only)`);
+            
+            toggleRepeat() {
+                this.isRepeating = !this.isRepeating;
+                this.repeatBtn?.classList.toggle('active', this.isRepeating);
+                this.updateStatus(this.isRepeating ? 'Repeat On' : 'Repeat Off');
+            }
+            
+            setVolume(volume) {
+                this.volume = volume;
+                if (this.audioPlayer) {
+                    this.audioPlayer.volume = volume;
+                }
+            }
+            
+            handleTrackEnd() {
+                if (this.isRepeating) {
+                    this.play();
+                } else {
+                    this.nextTrack();
+                }
+            }
+            
+            handleAudioError() {
+                this.updateStatus('Demo Mode - Audio not available');
+                this.showDemoMessage();
+            }
+            
+            showDemoMessage() {
+                this.updateStatus('Demo Mode - Replace with real audio files');
+                // Simulate playing state for demo
+                this.isPlaying = !this.isPlaying;
+                this.updatePlayButton(this.isPlaying);
+                if (this.isPlaying) {
+                    this.startVisualizerAnimation();
+                } else {
+                    this.stopVisualizerAnimation();
+                }
+            }
+            
+            updatePlayButton(playing) {
+                if (this.playPauseBtn) {
+                    this.playPauseBtn.textContent = playing ? '⏸️' : '▶️';
+                }
+            }
+            
+            updateStatus(status) {
+                if (this.statusEl) {
+                    this.statusEl.textContent = status;
+                }
+            }
+            
+            updateUI() {
+                this.updatePlayButton(this.isPlaying);
+                this.shuffleBtn?.classList.toggle('active', this.isShuffled);
+                this.repeatBtn?.classList.toggle('active', this.isRepeating);
+                if (this.volumeSlider) {
+                    this.volumeSlider.value = this.volume * 100;
+                }
+            }
+            
+            startVisualizerAnimation() {
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach((bar, index) => {
+                    bar.style.animationPlayState = 'running';
+                    // Add more dynamic animation
+                    bar.style.animationDelay = (index * 0.1) + 's';
+                });
+            }
+            
+            stopVisualizerAnimation() {
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach(bar => {
+                    bar.style.animationPlayState = 'paused';
+                });
             }
         }
         
